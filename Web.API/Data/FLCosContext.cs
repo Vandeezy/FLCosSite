@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Entities;
 
-namespace Entities
+namespace Data
 {
     public class FLCosContext: DbContext
     {

@@ -2,34 +2,66 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Services
 {
-    public interface ISportService
+    public interface ISportService: IService<Sport>
     {
-        Task<IEnumerable<string>> GetSports();
-        Task<Sport> GetSport(int id);
+
     }
 
     public class SportService: ISportService
     {
-        private IFLCosReaderWriter readerWriter;
-
-        public SportService(IFLCosReaderWriter rw)
+        private FLCosContext _db;
+        public SportService( FLCosContext db)
         {
-            readerWriter = rw;
+            _db = db;
         }
 
-        public Task<Sport> GetSport(int id)
+        public Task DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
+
+        public Task DeleteListAsync(List<int> id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Sport Get(int id)
+        {
+            return _db.Sports.Where(s => s.Id == id).FirstOrDefault();
+        }
+
+        public List<Sport> GetAll(Expression<Func<Sport, bool>> filter)
+        {
+            return _db.Sports.Where(filter).ToList();
+        }
+
+        public Sport GetSport(int id)
+        {
+            return _db.Sports.Where(s => s.Id == id).FirstOrDefault();
+        }
+
+
 
         public Task<IEnumerable<string>> GetSports()
         {
             throw new NotImplementedException();
+        }
+
+        public IQueryable<Sport> Query(Expression<Func<Sport, bool>> query)
+        {
+           return _db.Sports.Where(query);
+        }
+
+        public async Task SaveAsync(Sport sport)
+        {
+            _db.Sports.Add(sport);
+            await _db.SaveChangesAsync();
         }
     }
 }

@@ -1,0 +1,3 @@
+install Microsoft.EntityFrameworkCore.Tools to use Add-Migration
+
+install Microsoft.EntityFrameworkCore.Design at web project
