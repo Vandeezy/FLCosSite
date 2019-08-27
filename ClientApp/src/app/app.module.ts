@@ -12,7 +12,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 };
 
 import { AppComponent } from './app.component';
-
+import { FormsModule } from '@angular/forms';
 // Import containers
 import { DefaultLayoutComponent } from './containers';
 
@@ -40,8 +40,7 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
-import { SportManagementComponent } from './Sports/sport-management/sport-management.component';
-
+import { SportsModule } from './Sports/sports.module';
 @NgModule({
   imports: [
     BrowserModule,
@@ -55,7 +54,8 @@ import { SportManagementComponent } from './Sports/sport-management/sport-manage
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    SportsModule
   ],
   declarations: [
     AppComponent,
@@ -63,8 +63,7 @@ import { SportManagementComponent } from './Sports/sport-management/sport-manage
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent,
-    SportManagementComponent
+    RegisterComponent
   ],
   providers: [{
     provide: LocationStrategy,

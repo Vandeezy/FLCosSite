@@ -11,6 +11,7 @@ using Web.Models.Sports;
 
 namespace Web.Controllers
 {
+    [RoutePrefix("api/sports")]
     public class SportsController : ApiController
     {
        
@@ -23,7 +24,25 @@ namespace Web.Controllers
            _sportService = sportService;
             _mapper = mapper;
         }
-
+        // GET api/values/5
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAll(string query = "", int page = 1, int pageSize = 20)
+        {
+            var sport = _sportService.Get(1);
+            if (sport == null)
+            {
+                return NotFound();
+            }
+            var vm = _mapper.Map<SportViewModel>(sport);
+            //var vm = new SportViewModel()
+            //{
+            //    Id = sport.Id,
+            //    Date = sport.Date,
+            //    Steps = sport.Steps,
+            //    UserId = sport.UserId
+            //};
+            return Ok(vm);
+        }
         // GET api/values/5
         public async Task<IHttpActionResult> Get(int id)
         {
@@ -68,8 +87,8 @@ namespace Web.Controllers
         {
 
         }
-
-        // DELETE api/values/5
+        [HttpPost]
+        [Route("deletelist")]
         public void Delete(DeleteSportsViewModel ids)
         {
 

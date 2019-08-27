@@ -1,1 +1,107 @@
-<p>sport-management works!</p>
+<header *ngIf='!isAdmin' id="topbar" class="ph10" [ngStyle]="{'height': '58px'}">
+    <div class="topbar-left">
+        <ul class="nav nav-list nav-list-topbar pull-left">
+            <li class="active">
+                <a (click)="changeAll()" class="text-center" data-toggle="tab"><i class="iconfontyyy">&#xe604;</i> <span class="text-muted" i18n="@@all">所有</span> </a>
+            </li>
+            <li>
+                <a (click)="changeOnline()" class="text-center" data-toggle="tab"><i class="iconfontyyy">&#xe643;</i> <span class="text-muted" i18n="@@online">上线</span> </a>
+            </li>
+            <li>
+                <a (click)="changeOffline()" class="text-center" data-toggle="tab"><i class="iconfontyyy">&#xe62b;</i> <span class="text-muted" i18n="@@offline">未上线</span> </a>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="!isAdmin" class="topbar-right">
+        <a [routerLink]="['/management/import/ads']" class="btn btn-default btn-sm light fw600 ">
+            <i class="iconfontyyy">&#xe673;</i> 批量导入广告 </a>
+        <a [routerLink]="['add']" class="btn btn-default btn-sm light fw600 ml10">
+            <i class="iconfontyyy">&#xe636;</i> <ng-container i18n="@@addAds">新增广告</ng-container></a>
+    </div>
+</header>
+
+<section id="content" class="animated fadeIn table-layout">
+    <section id="content-body" class="animated fadeIn" [ngStyle]="{paddingRight:0}">
+        <div #content id="content-left" class="panel" [ngStyle]="{background: '#eeeeee'}">
+            <div class="panel-menu clearfix">
+                <div class="col-md-2">
+                    <div class="admin-form theme-primary">
+                        <label class="field prepend-icon">
+                                <input type="text" name="website" id="website" [(ngModel)]='searchVal' (keyup.enter)="enterUp()" class="gui-input" i18n-placeholder="@@name" placeholder="名称">
+                                <label for="website" class="field-icon">
+                                    <i class="fa fa-globe"></i>
+                                </label>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-1 text-left">
+                    <a (click)="enterUp()" class="btn btn-default btn-sm light fw600" [ngStyle]="{lineHeight: '30px'}"><i class="iconfontyyy">&#xe60a;</i> <ng-container i18n="@@search">查询</ng-container> </a>
+                </div>
+                <div class="col-md-9 text-right" [ngStyle]="{padding:'2px 0'}">
+                    <a (click)="changePanelType('publish', 1)" *ngIf="!isAdmin" [ngClass]="{'active': isMultiSelected}" class="btn btn-default btn-sm light fw600" [ngStyle]="{'margin-right':'-5px'}">
+                        <i class="iconfontyyy">&#xe925;</i> <ng-container i18n="@@multiple">多选</ng-container> </a>
+                    <a (click)="changePanelType('detail', 2)" *ngIf="!isAdmin" [ngClass]="{'active': !isMultiSelected}" class="btn btn-default btn-sm light fw600 ">
+                        <i class="iconfontyyy">&#xe60e;</i> <ng-container i18n="@@view">查看</ng-container> </a>
+
+                    <a (click)="changePanelType('search', 3)" *ngIf="!actionType && !isAdmin" [ngClass]="{'active': isFilterSelected}" class="btn btn-default btn-sm light fw600 ml10">
+                        <i class="iconfontyyy">&#xe618;</i> <ng-container i18n="@@filtrate">筛选</ng-container> </a>
+                    <a (click)="changePanelType('publish' ,4)" *ngIf="!isAdmin && !actionType" [ngClass]="{'active': isPublishSelected}" class="btn btn-default btn-sm light fw600 ml10">
+                        <i class="iconfontyyy">&#xe70e;</i> <ng-container i18n="@@publishAds">发布广告</ng-container> </a>
+
+                    <button (click)="applyOnOrOfflineAdsList(true)" *ngIf="!isAdmin && actionType == 'ApplyOffline' && isMultiSelected" [disabled]="!selectedlists.length" class="btn btn-default btn-sm light fw600 ml10">
+                        <i class="iconfontyyy text-danger">&#xe62b;</i> <ng-container i18n="@@batchRejected">批量下线</ng-container> </button>
+                    <button *ngIf="!isAdmin && actionType == 'ApplyOnline'" (click)="delelteAdsList()" class="btn btn-default btn-sm light fw600 ml10" [disabled]="!selectedlists.length" style="margin-right:-5px;">
+                        <i class="iconfontyyy">&#xe613;</i> <ng-container i18n="@@batchDelete">批量删除</ng-container> </button>
+                    <button (click)="applyOnOrOfflineAdsList(false)" *ngIf="!isAdmin && actionType == 'ApplyOnline'" [disabled]="!selectedlists.length" class="btn btn-default btn-sm light fw600 ml10">
+                        <i class="iconfontyyy text-system">&#xe643;</i> <ng-container i18n="@@batchApprove">批量上线</ng-container> </button>
+                </div>
+            </div>
+            <div class="panel-body" [ngStyle]="{background: '#e9e9e9'}">
+                <!-- <alert *ngIf="alertModel" [model]="alertModel"></alert> -->
+                <p *ngIf="!currentlists"><i class="fa fa-spinner fa-pulse fa-2x fa-fw" [ngStyle]="{color:'forestgreen'}"><span class="sr-only">Loading...</span></i></p>
+                <!-- <app-holder [type]="'ads'" *ngIf="currentlists && currentlists.length == 0"></app-holder>
+                <div #content class="item-content">
+                    <span *ngFor="let ads of currentlists | paginate: config">
+                        <app-store-ads [ads]="ads" (selectChanged)="clickAds($event)"></app-store-ads>
+                    </span>
+                </div>
+                <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="getPage($event)">
+                    <ul class="pagination pull-right">
+                        <li class="footable-page-arrow" [class.disabled]="p.isFirstPage()">
+                            <a (click)="p.previous()">
+                                < </a>
+                        </li>
+
+                        <li *ngFor="let page of p.pages" [class.active]="p.getCurrent() === page.value">
+                            <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                                <span>{{ page.label }}</span>
+                            </a>
+                            <span *ngIf="p.getCurrent() === page.value">{{ page.label }}</span>
+                        </li>
+
+                        <li class="footable-page-arrow" [class.disabled]="p.isLastPage()">
+                            <a (click)="p.next()"> > </a>
+                        </li>
+                    </ul>
+                </pagination-template> -->
+            </div>
+        </div>
+        <div *ngIf="isPanelcollapsed || isAdmin" id="content-right">
+            <div class="btn-group" id="toggle-icon">
+                <!-- <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" type="button" class="btn btn-default toggle_sidemenu_l" [ngStyle]="{borderRight: 0, height: '40px'}">
+                    <i class="iconfontyyy">&#xe646;</i>
+                </a> -->
+                <a (click)="togglePanel()" type="button" class="btn btn-default" [ngStyle]="{borderRight: 0, height: '40px'}">
+                    <i class="iconfontyyy">&#xe646;</i>
+                </a>
+            </div>
+            <div *ngIf="currentAds" id="collapseOne" class="panel-collapse width" [ngClass]="{'in': showPanel, 'collapse': !showPanel}" role="tabpanel" aria-labelledby="headingOne">
+                <!-- <app-ads-detail-panel *ngIf="!isAdmin && panelType == 'detail'" [ads]="currentAds" [isAdmin]="isAdmin" [actionType]="actionType" (deleteClicked)="OnDelete($event)" (actionClicked)="applyAction($event)"></app-ads-detail-panel>
+                <app-ads-search-panel *ngIf="!isAdmin && panelType == 'search'" [pixels]="pixels" (SearchClick)="searchClick($event)"></app-ads-search-panel>
+                <app-ads-publish-panel *ngIf="!isAdmin && panelType == 'publish'" [deviceLists]="deviceLists" [programLists]="programlists" (deviceClick)="devicePublishClick($event)" (deviceCategoryClick)="deviceCategoryPublishClick($event)" (programClick)="programsPublishclick($event)"></app-ads-publish-panel>
+                <app-ads-panel *ngIf="isAdmin || panelType == 'adsPanel'" [groupslists]="groupslists" [programLists]="programlists" [pixels]="pixels" [ads]="currentAds" (searchClick)="searchClick($event)"></app-ads-panel> -->
+            </div>
+        </div>
+    </section>
+</section>
+<!-- End: Content -->

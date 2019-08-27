@@ -1,25 +1,18 @@
 {
-  "name": "@coreui/coreui-free-angular-admin-template",
-  "version": "2.5.2",
-  "description": "CoreUI Free Angular 2+ Admin Template",
+  "name": "Allen-Site",
+  "version": "0.0.0",
+  "description": "Allen's site",
   "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
+    "name": "Allen",
+    "url": "https://lhf552004.github.io",
+    "github": "https://github.com/lhf552004"
   },
-  "contributors": [
-    {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
-    }
-  ],
-  "homepage": "https://coreui.io/angular",
-  "copyright": "Copyright 2019 creativeLabs Łukasz Holeczek",
+  "homepage": "https://lhf552004.github.io",
+  "copyright": "Copyright 2019 Allen",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4202",
+    "start": "ng serve --proxy-config proxy.config.json --port 4202",
     "build": "ng build --prod --aot --buildOptimizer --commonChunk --vendorChunk --optimization --progress",
     "test": "ng test",
     "lint": "ng lint",

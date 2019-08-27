@@ -8,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class SportManagementComponent implements OnInit {
 
   constructor() { }
-
+  input: string;
+  searchVal: any;
+  alertModel: any;
   ngOnInit() {
   }
-
+  enterUp(){
+    
+  }
 }

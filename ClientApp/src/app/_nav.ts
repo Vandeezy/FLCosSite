@@ -132,7 +132,15 @@ export const navItems: NavData[] = [
     url: '/charts',
     icon: 'icon-pie-chart'
   },
-  
+  {
+    title: true,
+    name: 'Sports'
+  },
+  {
+    name: '跑步',
+    url: '/sports',
+    icon: 'icon-pie-chart'
+  },
   {
     divider: true
   },
