@@ -63,12 +63,4 @@ export class SportEditComponent implements OnInit {
     }
     
   }
-
-  customPipeable<T, R>(source: Observable<T>): Observable<R>{
-    return source.pipe(map(t => {
-      let result = t * 2;
-      return result;
-    }));
-    
-  }
 }
