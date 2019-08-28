@@ -28,19 +28,10 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAll(string query = "", int page = 1, int pageSize = 20)
         {
-            var sport = _sportService.Get(1);
-            if (sport == null)
-            {
-                return NotFound();
-            }
-            var vm = _mapper.Map<SportViewModel>(sport);
-            //var vm = new SportViewModel()
-            //{
-            //    Id = sport.Id,
-            //    Date = sport.Date,
-            //    Steps = sport.Steps,
-            //    UserId = sport.UserId
-            //};
+            var sports = _sportService.GetAll(s => true);
+            
+            var vm = _mapper.Map<List<SportViewModel>>(sports);
+           
             return Ok(vm);
         }
         // GET api/values/5
@@ -76,8 +67,17 @@ namespace Web.Controllers
             }
             else
             {
-                var entity = _mapper.Map<Sport>(newVM);
-                 await _sportService.SaveAsync(entity);
+                try
+                {
+                    var entity = _mapper.Map<Sport>(newVM);
+                    //Test
+                    entity.UserId = 1;
+                    await _sportService.SaveAsync(entity);
+                }
+               catch(Exception ex)
+                {
+                    System.Diagnostics.Debug.Write(ex);
+                }
             }
             return "OK";
         }

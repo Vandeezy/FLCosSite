@@ -15,7 +15,7 @@ const httpOptions = {
 export class SportService {
 
   constructor(private http: HttpClient) { }
-  private url: "api/Sports";
+  private url = "api/sports";
   addSport(model: AddSport): Observable<any> {
     const url = `${this.url}`;
     return this.http.post<any>(url, model, httpOptions);
@@ -28,7 +28,7 @@ export class SportService {
     const url = `${this.url}/${id}`;
     return this.http.put<any>(url, model, httpOptions);
   }
-  getSports(query: string, page?: number, pageSize?: number): Observable<Sport[]>{
+  getSports(query?: string, page?: number, pageSize?: number): Observable<Sport[]>{
     const url = `${this.url}/?query=${query}&page=${page}&pageSize=${pageSize}`;
     return this.http.get<any>(url);
   }

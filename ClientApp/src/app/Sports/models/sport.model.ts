@@ -1,4 +1,4 @@
-export class Sport {
+export interface Sport {
     id: string;
     steps: number;
     date: Date;

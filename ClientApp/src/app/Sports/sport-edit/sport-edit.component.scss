@@ -1,0 +1,22 @@
+.panel-info .panel-heading {
+    color: #666666 !important;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex-content {
+    flex: 1;
+}
+
+.close-btn{
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	width: 15px;
+	height: 15px;
+	line-height: 15px;
+	border: 3px solid gray;
+}

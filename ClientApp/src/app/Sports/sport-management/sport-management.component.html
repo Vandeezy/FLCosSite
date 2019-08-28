@@ -13,10 +13,9 @@
         </ul>
     </div>
     <div *ngIf="!isAdmin" class="topbar-right">
-        <a [routerLink]="['/management/import/ads']" class="btn btn-default btn-sm light fw600 ">
-            <i class="iconfontyyy">&#xe673;</i> 批量导入广告 </a>
+      
         <a [routerLink]="['add']" class="btn btn-default btn-sm light fw600 ml10">
-            <i class="iconfontyyy">&#xe636;</i> <ng-container i18n="@@addAds">新增广告</ng-container></a>
+            <i class="iconfontyyy">&#xe636;</i> <ng-container i18n="@@addAds">新增记录</ng-container></a>
     </div>
 </header>
 
@@ -59,6 +58,12 @@
             <div class="panel-body" [ngStyle]="{background: '#e9e9e9'}">
                 <!-- <alert *ngIf="alertModel" [model]="alertModel"></alert> -->
                 <p *ngIf="!currentlists"><i class="fa fa-spinner fa-pulse fa-2x fa-fw" [ngStyle]="{color:'forestgreen'}"><span class="sr-only">Loading...</span></i></p>
+                <div #content class="item-content">
+                    <span *ngFor="let sport of currentlists">
+                        <a [routerLink]="['edit', sport.Id]" class="btn btn-default btn-sm light fw600 ml10">
+                                sport at {{sport.Date}} </a>
+                    </span>
+                </div>
                 <!-- <app-holder [type]="'ads'" *ngIf="currentlists && currentlists.length == 0"></app-holder>
                 <div #content class="item-content">
                     <span *ngFor="let ads of currentlists | paginate: config">
