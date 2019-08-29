@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import {SportService} from '../../sports/services/sport.service';
+import { map } from 'rxjs/operators';
+import {Sport} from '../../sports/models/sport.model';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -377,19 +380,57 @@ export class DashboardComponent implements OnInit {
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+  constructor(private sportService: SportService) {
 
+   }
   ngOnInit(): void {
     // generate random values for mainChart
     
+    // for (let i = 0; i <= this.mainChartElements; i++) {
+    //   this.mainChartData1.push(this.random(8000, 15000));
+    //   this.mainChartData2.push(this.random(5000, 12000));
+    //   this.mainChartData3.push(10000);
+    // }
+    
+    const date = new Date();
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    const theDate = new Date(date.getFullYear(), date.getMonth()+1, 0);
+    const days = theDate.getDate();
+    this.sportService.getSports(undefined,this.getTimeStringByDate(firstDay),this.getTimeStringByDate(lastDay)).subscribe(sports =>{
+        this.getChartDatas(sports);
+        console.log(this.mainChartData1);
+    });
+    // this.mainChartData1[17] = 10030;
+    // this.mainChartData1[18] = 9080;
+    // this.mainChartData1[19] = 11350;
+    // this.mainChartData1[20] = 12360;
+    // this.mainChartData1[21] = 7825;
+  }
+  getChartDatas(sports: any[]){
     for (let i = 0; i <= this.mainChartElements; i++) {
-      this.mainChartData1.push(this.random(8000, 15000));
       this.mainChartData2.push(this.random(5000, 12000));
       this.mainChartData3.push(10000);
+
+      var sport = sports.find(s => parseInt(s.Date.substring(8, 10)) === (i+1));
+      if(sport !== undefined)
+        this.mainChartData1[i] = sport.Steps;
+      else
+        this.mainChartData1[i] = 0;
     }
-    this.mainChartData1[17] = 10030;
-    this.mainChartData1[18] = 9080;
-    this.mainChartData1[19] = 11350;
-    this.mainChartData1[20] = 12360;
-    this.mainChartData1[21] = 7825;
+  }
+  getTimeStringByDate(date: Date) {
+    const dateStr = date.toDateString();
+    var time = '';
+    if (date != null) {
+      var year = date.getFullYear();
+      var month = (date.getMonth()+1).toString().padStart(2, '0');;
+      var day = date.getDate().toString().padStart(2, '0');
+
+      time = year + "/" + month + "/" + day;
+    }
+
+    console.log(time);
+    return time;
   }
 }

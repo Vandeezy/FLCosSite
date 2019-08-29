@@ -28,8 +28,8 @@ export class SportService {
     const url = `${this.url}/${id}`;
     return this.http.put<any>(url, model, httpOptions);
   }
-  getSports(query?: string, page?: number, pageSize?: number): Observable<Sport[]>{
-    const url = `${this.url}/?query=${query}&page=${page}&pageSize=${pageSize}`;
+  getSports(query?: string, startDate? :string, endDate?: string, page?: number, pageSize?: number): Observable<Sport[]>{
+    const url = `${this.url}/?query=${query}&startDate=${startDate}&endDate=${endDate}&page=${page}&pageSize=${pageSize}`;
     return this.http.get<any>(url);
   }
   deleteSport(id: number): Observable<any> {

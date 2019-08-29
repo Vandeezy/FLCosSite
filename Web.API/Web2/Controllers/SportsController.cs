@@ -3,11 +3,13 @@ using Entities;
 using Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Web.Models.Sports;
+using Web2.Helpers;
 
 namespace Web.Controllers
 {
@@ -26,9 +28,22 @@ namespace Web.Controllers
         }
         // GET api/values/5
         [HttpGet]
-        public async Task<IHttpActionResult> GetAll(string query = "", int page = 1, int pageSize = 20)
+        public async Task<IHttpActionResult> GetAll(string query = "",string startDate = "", string endDate ="", int page = 1, int pageSize = 20)
         {
-            var sports = _sportService.GetAll(s => true);
+            var where = PredicateBuilder.True<Sport>();
+
+            if (!string.IsNullOrEmpty(startDate))
+            {
+                var start = DateTime.ParseExact(startDate, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+                where = where.And(s => DateTime.Compare(start, (DateTime)s.Date) <= 0);
+            }
+            if (!string.IsNullOrEmpty(endDate))
+            {
+                var end = DateTime.ParseExact(endDate, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+                where = where.And(s => DateTime.Compare(end, (DateTime)s.Date) >= 0);
+            }
+            
+            var sports = _sportService.GetAll(where);
             
             var vm = _mapper.Map<List<SportViewModel>>(sports);
            
