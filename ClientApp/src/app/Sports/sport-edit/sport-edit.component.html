@@ -1,32 +1,14 @@
-<header id="topbar" class="ph10">
-    <h3>Sport</h3>
-    <!-- <div class="topbar-left">
-        <ul class="nav nav-list nav-list-topbar pull-left">
-            <li class="active">
-                <a (click)="changeSingle()" class="text-center" href="#fileTab_1" data-toggle="tab"><i class="fa fa-th"></i> <span class="text-muted" i18n="@@ads">广告</span> </a>
-            </li>
-            <li *ngIf="false">
-                <a (click)="changeMultiple()" class="text-center" href="#fileTab_2" data-toggle="tab"><i class="fa fa-arrow-up"></i> <span class="text-muted" i18n="@@multipleImg">多图</span> </a>
-            </li>
-        </ul>
-    </div> -->
-</header>
-<section id="content" class="animated fadeIn table-layout">
-    <form (ngSubmit)="onSubmit()" #adsform="ngForm" class="form-horizontal">
-        <div class="flex-content">
-            <!-- <div class="form-group">
-                <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker
-                        #d="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                    </div>
-                </div>
-            </div> -->
+<div class="card">
+    <div class="card-header">
+        <strong>Sport</strong>
+    </div>
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data" class="form-horizontal">
             <div class="form-group row">
                 <label class="col-md-3 col-form-label" for="date-input">Date Input</label>
                 <div class="col-md-9">
-                    <input class="form-control" id="date-input" type="date" [(ngModel)]="model.Date" name="date-input" placeholder="date">
+                    <input class="form-control" id="date-input" type="date" [(ngModel)]="model.Date" name="date-input"
+                        placeholder="date">
                     <span class="help-block">Please enter a valid date</span>
                 </div>
             </div>
@@ -35,16 +17,15 @@
                 <div class="col-md-9">
                     <input type="text" class="form-control" id="steps" required [(ngModel)]="model.Steps" name="steps"
                         #name="ngModel" />
-                    <div [hidden]="name.valid || name.pristine" class="alert alert-danger" i18n="@@fileNameEmpty">步数不能为空</div>
+                    <div [hidden]="name.valid || name.pristine" class="alert alert-danger" i18n="@@fileNameEmpty">步数不能为空
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr *ngIf="auth.isEditor" class="short alt mtn">
-        <div *ngIf="auth.isEditor" class="form-group row">
-            <div class="col-md-12 text-right">
-                <button type="button" class="btn btn-white" (click)="returnPrev(true)" i18n="@@cancel">取消</button>
-                <button type="submit" class="btn btn-primary" [disabled]="!adsform.form.valid"  i18n="@@saveButton">保存</button>
-            </div>
-        </div>
-    </form>
-</section>
+
+        </form>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary" (click)="returnPrev(true)"><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+    </div>
+</div>

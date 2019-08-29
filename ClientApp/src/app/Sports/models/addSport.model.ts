@@ -1,5 +1,5 @@
 export class AddSport {
-    steps: number;
-    date: Date;
-    userId: number;
+    steps?: number;
+    date?: Date;
+    userId?: number;
 }
