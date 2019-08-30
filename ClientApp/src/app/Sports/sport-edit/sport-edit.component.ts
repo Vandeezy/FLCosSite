@@ -63,7 +63,8 @@ export class SportEditComponent implements OnInit {
     })
   }
   returnPrev(flag: boolean) {
-
+    console.log('return')
+    this.router.navigate(['sports'])
   }
   onSubmit() {
     if (this.type === 'add') {

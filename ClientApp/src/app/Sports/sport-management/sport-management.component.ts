@@ -21,6 +21,7 @@ export class SportManagementComponent implements OnInit {
   ngOnInit() {
     this.sportService.getSports("","","").subscribe(s => {
       this.currentlists = s;
+      this.currentlists = this.currentlists.concat(s);
     })
   }
   enterUp(){
