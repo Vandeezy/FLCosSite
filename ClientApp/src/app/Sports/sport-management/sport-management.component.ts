@@ -17,7 +17,7 @@ export class SportManagementComponent implements OnInit {
   isMultiSelected: any;
   currentlists: Sport[];
   isPanelcollapsed: any;
-  
+  p: any;
   ngOnInit() {
     this.sportService.getSports("","","").subscribe(s => {
       this.currentlists = s;

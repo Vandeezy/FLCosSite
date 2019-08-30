@@ -20,7 +20,6 @@ import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -56,8 +55,7 @@ import { SportsModule } from './sports/sports.module';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    SportsModule,
-    NgbModule
+    SportsModule
   ],
   declarations: [
     AppComponent,

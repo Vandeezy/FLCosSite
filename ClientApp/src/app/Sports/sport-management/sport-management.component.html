@@ -1,5 +1,5 @@
 <header *ngIf='!isAdmin' id="topbar" class="ph10" [ngStyle]="{'height': '58px'}">
-    <div class="topbar-left">
+    <!-- <div class="topbar-left">
         <ul class="nav nav-list nav-list-topbar pull-left">
             <li class="active">
                 <a (click)="changeAll()" class="text-center" data-toggle="tab"><i class="iconfontyyy">&#xe604;</i> <span class="text-muted" i18n="@@all">所有</span> </a>
@@ -11,7 +11,7 @@
                 <a (click)="changeOffline()" class="text-center" data-toggle="tab"><i class="iconfontyyy">&#xe62b;</i> <span class="text-muted" i18n="@@offline">未上线</span> </a>
             </li>
         </ul>
-    </div>
+    </div> -->
     <div *ngIf="!isAdmin" class="topbar-right">
       
         <a [routerLink]="['add']" class="btn btn-default btn-sm light fw600 ml10">
@@ -88,10 +88,10 @@
                                     <!-- <span class="text-center">{{i+1}}</span> -->
                                 </label>
                             </td>
-                            <td class="text-center">{{ sport.Date }}</td>
-                            <td class="text-center">{{ sport.Steps }}</td>
+                            <td class="text-center">{{ sport.date | date: mediumDate }}</td>
+                            <td class="text-center">{{ sport.steps }}</td>
                             <td class="text-center project-actions">
-                                <a [routerLink]="['edit',sport.Id]"
+                                <a [routerLink]="['edit',sport.id]"
                                     class="btn btn-white btn-xs text-muted"> <i class="iconfontyyy text-system">&#xe670;</i>
                                     <ng-container i18n="@@view">查看</ng-container>
                                 </a>

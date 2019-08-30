@@ -413,9 +413,9 @@ export class DashboardComponent implements OnInit {
       this.mainChartData2.push(this.random(5000, 12000));
       this.mainChartData3.push(10000);
 
-      var sport = sports.find(s => parseInt(s.Date.substring(8, 10)) === (i+1));
+      var sport = sports.find(s => parseInt(s.date.substring(8, 10)) === (i+1));
       if(sport !== undefined)
-        this.mainChartData1[i] = sport.Steps;
+        this.mainChartData1[i] = sport.steps;
       else
         this.mainChartData1[i] = 0;
     }
