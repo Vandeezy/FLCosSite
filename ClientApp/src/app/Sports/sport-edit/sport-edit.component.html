@@ -5,10 +5,11 @@
     <div class="card-body">
         <form (ngSubmit)="onSubmit()" method="post" enctype="multipart/form-data" class="form-horizontal">
             <div class="form-group row">
-                <label class="col-md-3 col-form-label" for="date-input">Date Input</label>
+                <label class="col-md-3 col-xs-12 col-form-label" for="date-input">Date Input</label>
                 <div class="col-md-9">
-                    <input class="form-control" id="date-input" type="date" [(ngModel)]="model.Date" name="date-input"
-                        placeholder="date">
+                        <ng-datepicker [options]="options" [(ngModel)]="model.Date" name="sport_time" #start_time="ngModel"></ng-datepicker>
+                    <!-- <input class="form-control" id="date-input" type="date" [(ngModel)]="date" name="date-input"
+                        placeholder="date"> -->
                     <span class="help-block">Please enter a valid date</span>
                 </div>
             </div>

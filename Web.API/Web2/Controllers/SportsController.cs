@@ -43,7 +43,7 @@ namespace Web.Controllers
                 where = where.And(s => DateTime.Compare(end, (DateTime)s.Date) >= 0);
             }
             
-            var sports = _sportService.GetAll(where);
+            var sports = _sportService.GetAll(where).AsQueryable().Skip((page -1) * pageSize).Take(pageSize).ToList();
             
             var vm = _mapper.Map<List<SportViewModel>>(sports);
            

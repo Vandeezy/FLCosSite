@@ -396,8 +396,9 @@ export class DashboardComponent implements OnInit {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     const theDate = new Date(date.getFullYear(), date.getMonth()+1, 0);
-    const days = theDate.getDate();
-    this.sportService.getSports(undefined,this.getTimeStringByDate(firstDay),this.getTimeStringByDate(lastDay)).subscribe(sports =>{
+    this.mainChartElements = theDate.getDate();
+
+    this.sportService.getSports('',this.getTimeStringByDate(firstDay),this.getTimeStringByDate(lastDay)).subscribe(sports =>{
         this.getChartDatas(sports);
         console.log(this.mainChartData1);
     });

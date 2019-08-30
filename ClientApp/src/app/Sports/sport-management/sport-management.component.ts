@@ -19,7 +19,7 @@ export class SportManagementComponent implements OnInit {
   isPanelcollapsed: any;
   
   ngOnInit() {
-    this.sportService.getSports().subscribe(s => {
+    this.sportService.getSports("","","").subscribe(s => {
       this.currentlists = s;
     })
   }
