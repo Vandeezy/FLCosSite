@@ -55,7 +55,8 @@ import { SportsModule } from './sports/sports.module';
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ChartsModule,
-    SportsModule
+    SportsModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
